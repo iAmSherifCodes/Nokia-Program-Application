@@ -16,8 +16,8 @@ public class Nokia {
     public void addToArray(int index, String element){
         contacts.add(index, element);
     }
-    public String errorMessage(String message){
-        return message;
+    public void errorMessage(String message){
+        System.out.println(message);
     }
     public void menu(){
         System.out.println("""
@@ -42,7 +42,7 @@ public class Nokia {
 
         switch (userChoice){
             case 1: phonebook(); break;
-//            case 2: message(); break;
+            case 2: message(); break;
 //            case 3: chat(); break;
 //            case 4: callRegister(); break;
 //            case 5: tones(); break;
@@ -80,33 +80,28 @@ public class Nokia {
 
         switch (userPhonebookChoice){
             case "1":
-                System.out.println("""
-                Type a name to search:
-                or
-                """);
+                previousMenuPrompt("name to search:");
                 String nameToSearch = scan.nextLine();
-               // nameToSearch = scan.nextLine();
-                previousMenuPrompt();
+                nameToSearch = scan.nextLine();
                 phonebookBackMethod(nameToSearch);
                 if (!nameToSearch.equalsIgnoreCase("back")) {
 
                     if (contacts.isEmpty()){
                         System.out.println("No contact in phonebook");
+                        System.out.println();
                     }
                     else {
                         System.out.println(contacts.contains(nameToSearch) ? nameToSearch + " is in contact" :  nameToSearch + " is not in contact");
                     }
                     previousMenuPrompt();
-                    nameToSearch = scan.nextLine();
-                    nameToSearch = scan.nextLine();
+                    nameToSearch = scan.next();
                     phonebookBackMethod(nameToSearch);
                     break;
                 }
                 break;
 
             case "2":
-                System.out.println("Type a service Number: Or");
-                previousMenuPrompt();
+                previousMenuPrompt("service Number:");
                 String serviceNo = scan.nextLine();
                 serviceNo = scan.nextLine();
                 phonebookBackMethod(serviceNo);
@@ -128,21 +123,30 @@ public class Nokia {
                 addToArray(nameToAdd);
                 System.out.println(nameToAdd+" has been added successfully!");
                 previousMenuPrompt();
-                nameToAdd = scan.nextLine();
-                nameToAdd = scan.nextLine();
+                nameToAdd = scan.next();
                 phonebookBackMethod(nameToAdd);
                 break;
 
             case "4":
-                System.out.println("""
-                        Type erase to erase all contact Or
-                        """);
-                previousMenuPrompt();
+                previousMenuPrompt("erase to erase all contact");
                 String eraseOption = scan.nextLine();
                 eraseOption = scan.nextLine();
                 switch (eraseOption){
-                    case "erase": contacts.clear(); break;
-                    case "back" : phonebookBackMethod(eraseOption);break;
+                    case "erase":
+                        contacts.clear();
+                        System.out.println("All contacts erased");
+                        System.out.println();
+                        previousMenuPrompt();
+                        eraseOption = scan.next();
+                        phonebookBackMethod(eraseOption);
+                        break;
+                    case "back" :
+                        phonebookBackMethod(eraseOption);
+                        previousMenuPrompt();
+                        eraseOption = scan.next();
+                        phonebookBackMethod(eraseOption);
+                        break;
+
                     default:
                         errorMessage("!!ERROR 41Ten!! Invalid input! Try Again");
                         phonebook();
@@ -153,6 +157,7 @@ public class Nokia {
             case "5":
                 if (contacts.isEmpty()){
                     System.out.println("No contact in phonebook");
+                    System.out.println();
                     previousMenuPrompt();
                     String option = scan.nextLine();
                     option = scan.nextLine();
@@ -189,28 +194,47 @@ public class Nokia {
                 break;
 
             case "7":
-                System.out.println("Enter receipient name: or");
-                previousMenuPrompt();
-                String reciepint = scan.nextLine();
-                reciepint = scan.nextLine();
-                phonebookBackMethod(reciepint);
-                if(!reciepint.equalsIgnoreCase("back")){
-                    System.out.println("Birthday Card Sent! to "+ reciepint);
+                previousMenuPrompt("receipient name");
+                String receipient = scan.nextLine();
+                receipient = scan.nextLine();
+                phonebookBackMethod(receipient);
+                if(!receipient.equalsIgnoreCase("back")){
+                    System.out.println("Birthday Card Sent to "+ receipient);
                     previousMenuPrompt();
-                    reciepint = scan.nextLine();
-                    reciepint = scan.nextLine();
-                    phonebookBackMethod(reciepint);
+                    receipient = scan.next();
+                    phonebookBackMethod(receipient);
                     break;
                 }
 
                 break;
 
             case "8":
-                System.out.println("Omo you don enter options o");
-                previousMenuPrompt();
+                previousMenuPrompt("""
+                        1 --> Type of view
+                        2 --> Memory Status
+                        """);
                 choice = scan.nextLine();
                 choice = scan.nextLine();
-                phonebookBackMethod(choice);
+                switch (choice) {
+                    case "1" -> {
+                        System.out.println("Type of view");
+                        previousMenuPrompt();
+                        choice = scan.next();
+                        phonebookBackMethod(choice);
+                    }
+                    case "2" -> {
+                        System.out.println("Memory status");
+                        previousMenuPrompt();
+                        choice = scan.next();
+                        phonebookBackMethod(choice);
+                    }
+                    case "back" -> {
+                        phonebookBackMethod(choice);
+                        previousMenuPrompt();
+                        choice = scan.next();
+                        phonebookBackMethod(choice);
+                    }
+                }
                 break;
 
             case "9":
@@ -226,30 +250,34 @@ public class Nokia {
             case "10":
                 System.out.println("You've added a voice tag!");
                 previousMenuPrompt();
-                System.out.println("1");
                 choice = scan.nextLine();
                 choice = scan.nextLine();
                 phonebookBackMethod(choice);
                 break;
 
             default:
-                errorMessage("Invalid Input Or");
-                previousMenuPrompt();
-                choice = scan.nextLine();
-                choice = scan.nextLine();
-                phonebookBackMethod(choice);
+                errorMessage("Invalid Input! Try Again"); phonebook();
                 break;
         }
 
     }
 
+    public void previousMenuPrompt(String prompt){
+        System.out.printf("Type a %s or back to return to previous menu",prompt);
+        System.out.println();
+    }
     public void previousMenuPrompt(){
         System.out.println("Type back to return to previous menu");
+        System.out.println();
     }
     public void phonebookBackMethod(String variableParameter){
         if (variableParameter.equalsIgnoreCase("back")){
             phonebook();
         }
+
+    }
+
+    public void message(){
 
     }
 
