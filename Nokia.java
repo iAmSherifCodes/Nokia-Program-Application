@@ -4,15 +4,15 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Nokia {
-    ArrayList<String> contacts = new ArrayList<String>();
+    private ArrayList<String> contacts = new ArrayList<>();
     Scanner scan = new Scanner(System.in);
     //To return to previous menu
     //when the user type (back) we call the previous menu in the condition statement
     // if (userInput.equalsIgnoreCase("back")) previousMenu();
 
-    public void addToArray(String element){
-        contacts.add(element);
-    }
+//    public void addToArray(String element){
+//        contacts.add(element);
+//    }
     public void addToArray(int index, String element){
         contacts.add(index, element);
     }
@@ -58,7 +58,7 @@ public class Nokia {
         }
     }
     public void phonebook(){
-        ArrayList<String> contacts = new ArrayList<String>();
+      //  ArrayList<String> contacts = new ArrayList<>();
         System.out.println("""
                 Enter:
                 1  --> Search
@@ -76,22 +76,23 @@ public class Nokia {
 
 
         String userPhonebookChoice = scan.next();
+        scan.nextLine();
        // userPhonebookChoice = scan.nextLine();
 
         switch (userPhonebookChoice){
             case "1":
                 previousMenuPrompt("name to search:");
                 String nameToSearch = scan.nextLine();
-                nameToSearch = scan.nextLine();
+//                nameToSearch = scan.nextLine();
                 phonebookBackMethod(nameToSearch);
                 if (!nameToSearch.equalsIgnoreCase("back")) {
 
-                    if (contacts.isEmpty()){
+                    if (this.contacts.isEmpty()){
                         System.out.println("No contact in phonebook");
                         System.out.println();
                     }
                     else {
-                        System.out.println(contacts.contains(nameToSearch) ? nameToSearch + " is in contact" :  nameToSearch + " is not in contact");
+                        System.out.println(this.contacts.contains(nameToSearch) ? nameToSearch + " is in contact" :  nameToSearch + " is not in contact");
                     }
                     previousMenuPrompt();
                     nameToSearch = scan.next();
@@ -118,10 +119,10 @@ public class Nokia {
             case "3":
                 System.out.println("Add Name");
                 String nameToAdd = scan.nextLine();
-                nameToAdd = scan.nextLine();
                 //addToArray(nameToAdd);
                 addToArray(nameToAdd);
                 System.out.println(nameToAdd+" has been added successfully!");
+                System.out.println(this.contacts);
                 previousMenuPrompt();
                 nameToAdd = scan.next();
                 phonebookBackMethod(nameToAdd);
@@ -130,7 +131,6 @@ public class Nokia {
             case "4":
                 previousMenuPrompt("erase to erase all contact");
                 String eraseOption = scan.nextLine();
-                eraseOption = scan.nextLine();
                 switch (eraseOption){
                     case "erase":
                         contacts.clear();
@@ -155,27 +155,24 @@ public class Nokia {
                 break;
 
             case "5":
-                if (contacts.isEmpty()){
+                if (this.contacts.isEmpty()){
                     System.out.println("No contact in phonebook");
                     System.out.println();
                     previousMenuPrompt();
                     String option = scan.nextLine();
-                    option = scan.nextLine();
                     phonebookBackMethod(option);
-                    break;
                 }else {
                     //List the contacts for the user
-                    for (int j =0; j < contacts.size() ; j++ ){
-                        contacts.get(j);
+                    for (String contact : this.contacts) {
+                        System.out.println("- " + contact);
                     }
+                    System.out.println();
                     //Prompt user to edit contact if they wish to
                     System.out.println("Which name do you wish to edit? ");
                     String contactToEdit = scan.nextLine();
-                    contactToEdit = scan.nextLine();
                     if (contacts.contains(contactToEdit)){
                         contacts.remove(contactToEdit);
                         System.out.println("Enter new name");
-                        contactToEdit = scan.nextLine();
                         contactToEdit = scan.nextLine();
                         contacts.add(contactToEdit);
                         System.out.println("Contact Edited Successfully");
@@ -203,13 +200,12 @@ public class Nokia {
                     previousMenuPrompt();
                     receipient = scan.next();
                     phonebookBackMethod(receipient);
-                    break;
                 }
 
                 break;
 
             case "8":
-                previousMenuPrompt("""
+                System.out.println("""
                         1 --> Type of view
                         2 --> Memory Status
                         """);
@@ -240,19 +236,20 @@ public class Nokia {
             case "9":
                 System.out.println("Enter Speed Dial number");
                 int speedDial = scan.nextInt();
-                System.out.printf("%d has been added to speed dial", speedDial);
+                System.out.printf("%d has been added to speed dial ", speedDial);
                 previousMenuPrompt();
-                choice = scan.nextLine();
-                choice = scan.nextLine();
+                choice = scan.next();
                 phonebookBackMethod(choice);
                 break;
 
             case "10":
                 System.out.println("You've added a voice tag!");
                 previousMenuPrompt();
-                choice = scan.nextLine();
-                choice = scan.nextLine();
+                choice = scan.next();
                 phonebookBackMethod(choice);
+                break;
+            case "back":
+                menu();
                 break;
 
             default:
@@ -260,6 +257,10 @@ public class Nokia {
                 break;
         }
 
+    }
+
+    private void addToArray(String nameToAdd) {
+        this.contacts.add(nameToAdd);
     }
 
     public void previousMenuPrompt(String prompt){
