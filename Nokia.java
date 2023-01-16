@@ -363,9 +363,12 @@ public class Nokia {
                             messageBackMethod(c);
                         }else {
                             //List all messages for the user
-                            for (int message = 1 ; message <= messagesDraft.size(); message++) {
-                                System.out.println(message + " - " + messagesDraft.get(message));
+                            for (int message = 0 ; message < messagesDraft.size(); message++) {
+                                System.out.println(message+1 + " - " + messagesDraft.get(message));
                             }
+                            previousMenuPrompt();
+                            String c = scan.nextLine();
+                            messageBackMethod(c);
                         }
                         break;
 
@@ -381,45 +384,51 @@ public class Nokia {
                 break;
 
             case "5":
+                System.out.println("No picture message available");
+                previousMenuPrompt();
+                String pictureTemp = scan.next();
+                messageBackMethod(pictureTemp);
+                break;
+
+            case "6":
                 System.out.println("No templates available");
                 previousMenuPrompt();
                 String template = scan.next();
                 messageBackMethod(template);
                 break;
 
-            case "6":
+            case "7":
                 System.out.println("Smileys");
                 String smileys[] = new String[5];
-                smileys[0] = "❤️😁😍💕🤷‍🫡"; smileys[1] = "😊"; smileys[2] = "👌"; smileys[3] ="😒"; smileys[4]= "😎";
+                smileys[0] = "❤️😁😍💕🥶‍🫡😥🙄😶🤩"; smileys[1] = "😊🥰🥲🙂🤔😔🤤😛🥱😯"; smileys[2] = "🫥😏😮😪👌😦😤😖😲🙃"; smileys[3] ="😴😜😒😕😒🥴🤪🥵‍💨😩"; smileys[4]= "☹️😞😢😧🤯😰🥶😵😠😎";
                 for(String smiley : smileys){
                     System.out.println(smiley);
                 }
                 previousMenuPrompt();
                 String smileyChoice = scan.next();
-                smileyChoice =scan.nextLine();
                 messageBackMethod(smileyChoice);
                 break;
 
-            case "7":
-                previousMenuPrompt("receipient name");
-                String receipient = scan.nextLine();
-                receipient = scan.nextLine();
-                phonebookBackMethod(receipient);
-                if(!receipient.equalsIgnoreCase("back")){
-                    System.out.println("Birthday Card Sent to "+ receipient);
-                    previousMenuPrompt();
-                    receipient = scan.next();
-                    phonebookBackMethod(receipient);
-                }
+            case "8":
+                messageSettings();
+//                String receipient = scan.nextLine();
+//                receipient = scan.nextLine();
+//                phonebookBackMethod(receipient);
+//                if(!receipient.equalsIgnoreCase("back")){
+//                    System.out.println("Birthday Card Sent to "+ receipient);
+//                    previousMenuPrompt();
+//                    receipient = scan.next();
+//                    phonebookBackMethod(receipient);
+//                }
 
                 break;
 
-            case "8":
+            case "9":
                 System.out.println("""
                         1 --> Type of view
                         2 --> Memory Status
                         """);
-                choice = scan.nextLine();
+              String  choice = scan.nextLine();
                 choice = scan.nextLine();
                 switch (choice) {
                     case "1" -> {
@@ -443,7 +452,7 @@ public class Nokia {
                 }
                 break;
 
-            case "9":
+            case "10":
                 System.out.println("Enter Speed Dial number");
                 int speedDial = scan.nextInt();
                 System.out.printf("%d has been added to speed dial ", speedDial);
@@ -452,7 +461,7 @@ public class Nokia {
                 phonebookBackMethod(choice);
                 break;
 
-            case "10":
+            case "11":
                 System.out.println("You've added a voice tag!");
                 previousMenuPrompt();
                 choice = scan.next();
@@ -463,13 +472,95 @@ public class Nokia {
                 break;
 
             default:
-                errorMessage("Invalid Input! Try Again"); phonebook();
+                errorMessage("Invalid Input! Try Again"); message();
                 break;
         }
     }
 
     private void addToMessages(String nameToAdd) {
         this.messagesDraft.add(nameToAdd);
+    }
+
+    public void messageSettings(){
+        System.out.println("""
+                Enter:
+                1  --> Set 1°
+                2  --> Common°
+                back --> Return to previous menu
+                """);
+
+        String messageSettingsChoice = scan.next();
+        scan.nextLine();
+
+        switch (messageSettingsChoice){
+            case "1":
+                System.out.println("""
+                Enter:
+                1  --> Message center number
+                2  --> Message sent as
+                3  --> Message Validity
+                back --> Return to previous menu
+                """);
+
+                String msChoice = scan.next();
+                if (msChoice.equalsIgnoreCase("1")){
+                    System.out.println("Message center empty! ");
+                    previousMenuPrompt();
+                    String mcnChoice = scan.next();
+                    messageBackMethod(mcnChoice);
+                }
+                if (msChoice.equalsIgnoreCase("2")){
+                    System.out.println("Message sent as >>> ... DONE! ");
+                    previousMenuPrompt();
+                    String msaChoice = scan.next();
+                    messageBackMethod(msaChoice);
+                }
+                if (msChoice.equalsIgnoreCase("3")){
+                    System.out.println("Message validity is NULL! ");
+                    previousMenuPrompt();
+                    String mvChoice = scan.next();
+                    messageBackMethod(mvChoice);
+                }
+                break;
+            case "2":
+                System.out.println("""
+                Enter:
+                1  --> Delivery reports
+                2  --> Reply visa same centre
+                3  --> Character support
+                back --> Return to previous menu
+                """);
+
+                String mssChoice = scan.next();
+                switch (mssChoice) {
+                    case ("1") -> {
+                        System.out.println("Delivery report Empty! ");
+                        previousMenuPrompt();
+                        String drChoice = scan.next();
+                        messageBackMethod(drChoice);
+                    }
+                    case ("2") -> {
+                        System.out.println("Reply via same centre Empty! ");
+                        previousMenuPrompt();
+                        String rvscChoice = scan.next();
+                        messageBackMethod(rvscChoice);
+                    }
+                    case ("3") -> {
+                        System.out.println("Character? No Support! Sorry ");
+                        previousMenuPrompt();
+                        String csChoice = scan.next();
+                        messageBackMethod(csChoice);
+                    }
+                    case ("back") -> {
+                        message();
+                        break;
+                    }
+
+                    default -> {
+                        errorMessage("Invalid Input! Try again");
+                        messageSettings();
+                    }
+                }
     }
 
 }
