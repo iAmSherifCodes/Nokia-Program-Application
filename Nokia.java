@@ -400,7 +400,7 @@ public class Nokia {
             case "7":
                 System.out.println("Smileys");
                 String smileys[] = new String[5];
-                smileys[0] = "❤️😁😍💕🥶‍🫡😥🙄😶🤩"; smileys[1] = "😊🥰🥲🙂🤔😔🤤😛🥱😯"; smileys[2] = "🫥😏😮😪👌😦😤😖😲🙃"; smileys[3] ="😴😜😒😕😒🥴🤪🥵‍💨😩"; smileys[4]= "☹️😞😢😧🤯😰🥶😵😠😎";
+                smileys[0] = "❤     😁       😍       💕       🥶       ‍🫡      😥       🙄       😶       🤩"; smileys[1] = "😊     🥰       🥲       🙂       🤔       😔       🤤       😛       🥱       😯"; smileys[2] = "🫥     😏       😮       😪       👌       😦       😤       😖       😲       🙃"; smileys[3] ="😴      😜       😒       😕       😒       🥴       🤪       🥵       ‍💨      😩"; smileys[4]= "☹️     😞       😢       😧       🤯       😰       🥶       😵       😠       😎";
                 for(String smiley : smileys){
                     System.out.println(smiley);
                 }
@@ -411,61 +411,30 @@ public class Nokia {
 
             case "8":
                 messageSettings();
-//                String receipient = scan.nextLine();
-//                receipient = scan.nextLine();
-//                phonebookBackMethod(receipient);
-//                if(!receipient.equalsIgnoreCase("back")){
-//                    System.out.println("Birthday Card Sent to "+ receipient);
 //                    previousMenuPrompt();
-//                    receipient = scan.next();
-//                    phonebookBackMethod(receipient);
-//                }
-
+//                    String rec = scan.next();
+//                    messageBackMethod(rec);
                 break;
 
             case "9":
-                System.out.println("""
-                        1 --> Type of view
-                        2 --> Memory Status
-                        """);
-              String  choice = scan.nextLine();
-                choice = scan.nextLine();
-                switch (choice) {
-                    case "1" -> {
-                        System.out.println("Type of view");
-                        previousMenuPrompt();
-                        choice = scan.next();
-                        phonebookBackMethod(choice);
-                    }
-                    case "2" -> {
-                        System.out.println("Memory status");
-                        previousMenuPrompt();
-                        choice = scan.next();
-                        phonebookBackMethod(choice);
-                    }
-                    case "back" -> {
-                        phonebookBackMethod(choice);
-                        previousMenuPrompt();
-                        choice = scan.next();
-                        phonebookBackMethod(choice);
-                    }
-                }
+                System.out.println("Info service unavailable");
+                previousMenuPrompt();
+                String ifsChoice = scan.next();
+                messageBackMethod(ifsChoice);
                 break;
 
             case "10":
-                System.out.println("Enter Speed Dial number");
-                int speedDial = scan.nextInt();
-                System.out.printf("%d has been added to speed dial ", speedDial);
+                System.out.println("Voice mailbox number empty! ");
                 previousMenuPrompt();
-                choice = scan.next();
-                phonebookBackMethod(choice);
+                String vmnChoice = scan.next();
+                messageBackMethod(vmnChoice);
                 break;
 
             case "11":
-                System.out.println("You've added a voice tag!");
+                System.out.println("Service command editor ");
                 previousMenuPrompt();
-                choice = scan.next();
-                phonebookBackMethod(choice);
+                String smeChoice = scan.next();
+                messageBackMethod(smeChoice);
                 break;
             case "back":
                 menu();
@@ -477,9 +446,6 @@ public class Nokia {
         }
     }
 
-    private void addToMessages(String nameToAdd) {
-        this.messagesDraft.add(nameToAdd);
-    }
 
     public void messageSettings(){
         System.out.println("""
@@ -496,9 +462,9 @@ public class Nokia {
             case "1":
                 System.out.println("""
                 Enter:
-                1  --> Message center number
-                2  --> Message sent as
-                3  --> Message Validity
+                1    -->   Message center number
+                2    -->   Message sent as
+                3    -->   Message Validity
                 back --> Return to previous menu
                 """);
 
@@ -533,34 +499,34 @@ public class Nokia {
 
                 String mssChoice = scan.next();
                 switch (mssChoice) {
-                    case ("1") -> {
+                    case ("1") :
                         System.out.println("Delivery report Empty! ");
                         previousMenuPrompt();
                         String drChoice = scan.next();
                         messageBackMethod(drChoice);
-                    }
-                    case ("2") -> {
+                        break;
+
+                    case ("2") :
                         System.out.println("Reply via same centre Empty! ");
                         previousMenuPrompt();
                         String rvscChoice = scan.next();
                         messageBackMethod(rvscChoice);
-                    }
-                    case ("3") -> {
+                        break;
+                    case ("3"):
                         System.out.println("Character? No Support! Sorry ");
                         previousMenuPrompt();
                         String csChoice = scan.next();
                         messageBackMethod(csChoice);
-                    }
-                    case ("back") -> {
-                        message();
                         break;
-                    }
+                    case ("back"):
+                        messageBackMethod(mssChoice);
+                        break;
 
-                    default -> {
+                    default:
                         errorMessage("Invalid Input! Try again");
                         messageSettings();
-                    }
+                        break;
                 }
     }
 
-}
+}}
